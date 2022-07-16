@@ -9,6 +9,15 @@ const server = express().listen(PORT, () => {
 
 const socketHandler = socketIO(server);
 
-socketHandler.on("connection", () => {
+socketHandler.on("connection", (socket) => {
+  socket.on("connect_error", () => {
+    console.log("Connect Error");
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Client disconnected");
+  });
+
   console.log("Client connected");
+  socketHandler.emit("crypto", "Hello Users!");
 });
